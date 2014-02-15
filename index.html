@@ -1,1 +1,207 @@
-Hello worrlds!
+<!doctype html>
+<html>
+
+<head>
+	<!-- load stylesheet css untuk kita -->
+	<link rel="stylesheet" href="style.css" type="text/css">
+	<!-- load fonts from google api, can change -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+</head>
+
+<title></title>
+<body>
+
+<!-- content web nya -->
+<div class="container">
+	<!-- divs for upcoming events slide -->
+	<div class="header">
+		<h1>...UPCOMING EVENTS</h1>
+		 <!--to be implemented-->
+	</div>
+	
+	<div id="slideshow" class="upcoming">
+		<!-- tempat kita munculin gambar upcoming events -->
+		<!-- this div holds our images -->
+		<div class="poster" id="eventImg1"><img src="url1.jpg" alt="Event1"></div>
+		<div class="poster" id="eventImg2"><img src="url2.jpg" alt="Event2"></div>
+		<div class="poster" id="eventImg3"><img src="url3.jpg" alt="Event3"></div>
+		<div id="info" class="info">
+			<!-- tempat kita display date, name of event -->
+			<table class="infotable">
+				<tr><td id="eventDate">15/20/2013</td></tr>
+				<tr><td id="eventName">Piano Orchestra EXTREME III Inaugural</td></tr>
+				<tr><td id="eventPlace">National University of Singapore</td></tr>
+			</table>
+		</div>
+		<!-- navigation button -->
+		<div id="navleft" class="bleft"><a>&#60</a></div>
+		<div id="navright" class="bright"><a>&#62</a></div>
+	</div>
+	
+	<div class="footer">
+		<span id="footnote">Created by Andhieka Putra and Prajogo Tio. 2014.</span>
+	</div>
+</div>
+
+
+<!-- implementasi javascript -->
+<script>
+//JavaScript Code
+//declaration of document elements pointers
+var img = []; //image holder
+img[0] = document.getElementById('eventImg1');
+img[1] = document.getElementById('eventImg2');
+img[2] = document.getElementById('eventImg3');
+var navleft = document.getElementById('navleft');
+var navright = document.getElementById('navright');
+var slideshow = document.getElementById('slideshow');
+var info = document.getElementById('info');
+var eventDate = document.getElementById('eventDate');
+var eventName = document.getElementById('eventName');
+var eventPlace = document.getElementById('eventPlace');
+
+//info of event1, event2, event3 , contained in array of objects
+//info are retrieved from mysql database, through php
+//we will display 3 events that are closest to current date
+//php to be implemented
+var event_info = [];
+event_info[0] = {
+	e_date : "7/3/2013",
+	e_name : "Comedy Night 2013",
+	e_place : "Huddersfield Student Union",
+};
+
+event_info[1] = {
+	e_date : "18/9/2013",
+	e_name : "The Unbeatable Event",
+	e_place : "The LensCrafter",
+};
+
+event_info[2] = {
+	e_date : "22/4/2013",
+	e_name : "SpeakerBox JAMM Live",
+	e_place : "Room 2 DUB Disco Balaerica House",
+};
+
+//declaration of state variables
+var curr_disp = 0;
+
+//initialize imgs position
+window.onload = function()
+{
+	eventDate.innerHTML = event_info[curr_disp].e_date;
+	eventName.innerHTML = event_info[curr_disp].e_name;
+	eventPlace.innerHTML = event_info[curr_disp].e_place;  
+	setTimeout(function(){
+		info.style.opacity = "1";
+	}, 10);
+}
+
+//SLIDE SHOW HANDLERS
+// fungsi slide_right, slide_left, prepare_left, prepare right, transition_set dan transition reset semuanya untuk keperluan slide show (not really maintainable huh)
+function slide_right(curr, next)
+{
+	//curr & next are pointer to img element
+	//curr is currently displayed, leaving the screen
+	//next is the next to be displayed, entering the screen
+	transition_set(curr); transition_set(next);
+	curr.style.left = "-800px";
+	next.style.left = "0px";
+}
+
+function slide_left(curr, next)
+{
+	transition_set(curr); transition_set(next);
+	curr.style.left = "800px";
+	next.style.left = "0px";
+}
+
+function prepare_right(curr, next)
+{
+	//prepare the position of curr & next;
+	transition_reset(curr); transition_reset(next);
+	curr.style.left = "0px"; next.style.left = "800px";
+}
+
+function prepare_left(curr,next)
+{
+	transition_reset(curr); transition_reset(next);
+	curr.style.left = "0px"; next.style.left = "-800px";	
+}
+
+function transition_set(elem)
+{
+	//setting transition properties
+	elem.style.setProperty("-webkit-transition", "all 2s ease-in-out");
+	elem.style.setProperty("-moz-transition", "all 2s ease-in-out");
+	elem.style.setProperty("transition", "all 2s ease-in-out");
+}
+
+function transition_reset(elem)
+{
+	//resetting transition properties
+	elem.style.setProperty("-webkit-transition", "none");
+	elem.style.setProperty("-moz-transition", "none");
+	elem.style.setProperty("transition", "none");	
+}
+
+navright.onclick = function()
+{
+	var i = curr_disp;
+	var j = (i == 2) ? 0 : (i+1); // next image to be displayed has an index of i+1 or 0 if i is 2.
+	prepare_right(img[i], img[j]);
+
+	info.style.opacity = "0";
+
+	setTimeout(function(){
+		slide_right(img[i], img[j]);
+	}, 10);
+
+	setTimeout(function(){
+		eventDate.innerHTML = event_info[j].e_date;
+		eventName.innerHTML = event_info[j].e_name;
+		eventPlace.innerHTML = event_info[j].e_place;  
+		info.style.opacity ="1";
+	}, 1000);
+
+	curr_disp = j;
+};
+
+navleft.onclick = function ()
+{
+	var i = curr_disp;
+	var j = (i == 0) ? 2 : (i-1); // next image to be displayed has an index of i-1 or 2 if i is 0.
+	prepare_left(img[i], img[j]);
+	info.style.opacity = "0";
+
+	setTimeout(	function(){
+		slide_left(img[i], img[j]);
+	}, 10);
+
+	setTimeout(function(){
+		eventDate.innerHTML = event_info[j].e_date;
+		eventName.innerHTML = event_info[j].e_name;
+		eventPlace.innerHTML = event_info[j].e_place;  
+		info.style.opacity ="1";
+	}, 1000);
+
+	curr_disp = j;
+};
+
+slideshow.onmouseover = function()
+{
+	navleft.style.opacity = "1";
+	navright.style.opacity = "1";
+};
+
+slideshow.onmouseout = function()
+{
+	navleft.style.opacity = "0";
+	navright.style.opacity = "0";
+};
+
+</script>
+
+
+</body>
+</html>

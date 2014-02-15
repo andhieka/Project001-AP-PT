@@ -1,0 +1,200 @@
+/* check out CSS Box Model issue dan box-sizing border-box */
+*
+{
+	box-sizing:border-box;
+}
+
+/* clear padding & margin, setting font-size relative to 16px default */
+body
+{
+	padding:0;
+	margin:0;
+	font-size:100%;
+	width:100%;
+	background-color:#efe;
+}
+
+/* for hyper links */
+a:link, a:visited, a:hover, a:focus, a:active
+{
+	text-decoration:none;
+}
+
+/* setting width of container 800px, center-aligned */
+.container
+{
+	position:absolute;
+	width:800px;
+	left:0px;
+	right:0px;
+	margin:64px auto;
+}
+
+/* setting header, content, and footer to take up 100% of container's width
+ * each will be stacked vertically
+ * min-height for footer & header : 100px
+ ************************************************************************* */
+.header, .footer, .upcoming
+{
+	position:relative;
+	display:block;
+	width:100%;
+	box-shadow:0px 0px 10px 2px #333;
+}
+
+/* upcoming event slide style */
+
+.header,.footer
+{
+	background-color:#eee;
+	height:60px;
+}
+
+.header 
+{
+	border-radius:28px 28px 0px 0px;
+}
+
+.footer
+{
+	border-radius:0px 0px 28px 28px;
+}
+
+div.header h1
+{
+	position:absolute;
+	padding:0px 8px;
+	font-family:"Open Sans Condensed", Arial, sans-serif;
+	font-size:3em;
+	color:#222;
+	letter-spacing:5px;
+	right:0px;
+	top:-36px;
+}
+
+/* setting height of upcoming as 400px, so dimension of pics displayed = 400 px x 600 px */
+/* img which overflows are hidden */
+.upcoming
+{
+	height:400px;
+	overflow:hidden;
+	z-index:1;
+}
+
+/* setting initial position & "cropping" of images. Allow transition. */
+div.upcoming div.poster
+{
+	position:absolute;
+	width:100%;
+	height:400px;
+}
+
+div.upcoming div img
+{
+	position:absolute;
+	width:100%;
+	top:-130px;
+}
+
+/* info will be at the bottom of images */
+.info
+{
+	position:absolute;
+	max-width:60%;
+	bottom:0;
+	right:0;
+	padding:10px 20px;
+	background-color:rgba(0,0,0,0.4);
+	-webkit-transition:all 1s;
+	-moz-transition:all 1s;
+	transition:all 1s;
+}
+
+.infotable
+{
+	font-family: "Open Sans Condensed", Helvetica, Arial, serif;
+	font-size:1.7em;
+	color:white;
+	text-shadow:0px 0px 10px black;
+}
+/* style for nav button */
+.bleft, .bright
+{
+	position:absolute;
+	height:96px;
+	width:48px;
+	top:0px;
+	bottom:0px;
+	margin:auto 0;
+	background-color:rgba(10,10,10,0.4);
+	-webkit-transition:all 1s;
+	-moz-transition:all 1s;
+	transition:all 1s;
+}
+
+.bleft
+{
+	left:0px;
+	border-radius:0px 48px 48px 0px;
+}
+
+.bright
+{
+	right:0px;
+	border-radius:48px 0px 0px 48px;
+}
+
+div.bright a, div.bleft a
+{
+	position:relative;
+	display:block;
+	top:22px;
+	color:white;
+	margin:auto;
+	font-family:"Courier New", courier, arial, serif;
+	font-size:3em;
+	cursor:pointer;
+	cursor:hand;
+}
+
+div.bright a 
+{ 
+	right:0px; 
+	text-align:center;
+}
+
+div.bleft a 
+{ 
+	left:0px; 
+	text-align:center;
+}
+
+/*initializer*/
+#info
+{
+	opacity:0;
+}
+
+#eventImg1
+{
+	left:0px;
+}
+
+#eventImg2, #eventImg3
+{
+	left:800px;
+}
+
+#navright, #navleft
+{
+	opacity:0;
+}
+
+#footnote
+{
+	position:absolute;
+	font-family:"Open Sans Condensed", Helvetica, Arial, sans-serif;
+	font-size:1.2em;
+	left:11px;
+	top:18px;
+}
